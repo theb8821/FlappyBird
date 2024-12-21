@@ -1,20 +1,20 @@
-import pygame
+import pygame, time
 from bird import Bird
 from pipe import Pipe
 from ground import Ground
+
 
 class Game:
     def __init__(self):
         self.width = 288
         self.height = 512
         self.score = 0
-        self.gapHeight = int(self.height * 0.25)
+        self.gapHeight = 100
         self.birdX = int(self.width * 0.1)
         self.birdY = self.height // 2 - 12
 
-
         self.bird = Bird(self.birdX, self.birdY)
-        self.pipe = Pipe(self.width + 150, self.gapHeight, self.width, self.height)
+        self.pipes = []
         self.ground = Ground(self.height)
 
         pygame.display.set_caption("Flappy Bird")
@@ -35,24 +35,42 @@ class Game:
                     self.bird.flap()
 
             self.bird.fall()
-            self.pipe.move()
+            self.createPipes()
+            self.pipeController()
             self.draw()
 
             # set frame rate
             clock.tick(60)
-    
+
+    def createPipes(self):
+        for _ in range(3):
+            self.pipes.append(
+                Pipe(self.width + 150, self.gapHeight, self.width, self.height)
+            )
+
+    def pipeController(self):
+        self.pipes[0].move()
+
+        for i in range(3):
+            if self.pipes[i].x <= -60:
+                self.pipes.remove(self.pipes[i])
+
+            if self.pipes[i].x <= self.width:
+                self.pipes[i + 1].move()
+
     def checkCollision(self):
         pass
 
     def draw(self):
-        self.window.blit(self.background, (0,0))
+        self.window.blit(self.background, (0, 0))
 
-        scoreText = self.font.render(f"Score: {self.score}", True, (255,255,255))
-        self.window.blit(scoreText, (self.width - 100, 20))
+        for pipe in self.pipes:
+            pipe.draw(self.window)
 
-        self.pipe.draw(self.window)
+        scoreText = self.font.render(f"Score: {self.score}", True, (255, 255, 255))
+        self.window.blit(scoreText, (0, 20))
+
         self.ground.draw(self.window)
         self.bird.draw(self.window)
 
         pygame.display.update()
-
