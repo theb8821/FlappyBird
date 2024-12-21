@@ -1,6 +1,7 @@
 import pygame
 from bird import Bird
 from pipe import Pipe
+from ground import Ground
 
 class Game:
     def __init__(self):
@@ -14,6 +15,7 @@ class Game:
 
         self.bird = Bird(self.birdX, self.birdY)
         self.pipe = Pipe(self.width + 150, self.gapHeight, self.width, self.height)
+        self.ground = Ground(self.height)
 
         pygame.display.set_caption("Flappy Bird")
         self.window = pygame.display.set_mode((self.width, self.height))
@@ -46,6 +48,8 @@ class Game:
         self.window.blit(scoreText, (self.width - 100, 20))
 
         self.pipe.draw(self.window)
+        self.ground.draw(self.window)
         self.bird.draw(self.window)
+        
         pygame.display.update()
 
