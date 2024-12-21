@@ -14,11 +14,10 @@ FlappyBird/
 ├── bird.py              # Class for the bird
 ├── pipe.py              # Class for pipes
 ├── game.py              # Handles game logic and state
-├── assets/              # Folder to store images, sounds, etc.
-│   ├── background.png
-│   ├── bird.png
-│   ├── pipe.png
-│   └── ...
+├── ground.py            # Class for the ground/base
+├── assets/              # Folder to store assets
+|   ├── sprites/
+│   ├── audio/
 └── README.md            # Project description, setup instructions
 ```
 

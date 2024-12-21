@@ -40,6 +40,9 @@ class Game:
 
             # set frame rate
             clock.tick(60)
+    
+    def checkCollision(self):
+        pass
 
     def draw(self):
         self.window.blit(self.background, (0,0))
@@ -50,6 +53,6 @@ class Game:
         self.pipe.draw(self.window)
         self.ground.draw(self.window)
         self.bird.draw(self.window)
-        
+
         pygame.display.update()
 
