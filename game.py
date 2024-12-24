@@ -1,4 +1,4 @@
-import pygame, time
+import pygame, time, sys
 from bird import Bird
 from pipe import Pipe
 from ground import Ground
@@ -15,7 +15,7 @@ class Game:
 
         self.bird = Bird(self.birdX, self.birdY)
         self.pipes = []
-        self.ground = Ground(self.height)
+        self.ground = Ground(self.width, self.height)
 
         pygame.display.set_caption("Flappy Bird")
         self.window = pygame.display.set_mode((self.width, self.height))
@@ -34,10 +34,14 @@ class Game:
                 if event.type == pygame.KEYDOWN and pygame.K_SPACE:
                     self.bird.flap()
 
+            self.draw()
+
             self.bird.fall()
             self.createPipes()
             self.pipeController()
-            self.draw()
+
+            if self.checkCollision():
+                running = False
 
             # set frame rate
             clock.tick(60)
@@ -59,7 +63,16 @@ class Game:
                 self.pipes[i + 1].move()
 
     def checkCollision(self):
-        pass
+        for pipe in self.pipes:
+            if pygame.Rect.colliderect(
+                pipe.rectTop, self.bird.rect
+            ) or pygame.Rect.colliderect(pipe.rectBottom, self.bird.rect):
+                return True
+
+        if self.bird.rect.bottom >= 400:
+            return True
+
+        return False
 
     def draw(self):
         self.window.blit(self.background, (0, 0))
