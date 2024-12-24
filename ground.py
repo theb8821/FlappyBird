@@ -1,6 +1,5 @@
 import pygame
 
-
 class Ground:
     def __init__(self, gameWidth, gameHeight):
         self.x = 0

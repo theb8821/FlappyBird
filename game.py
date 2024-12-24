@@ -2,6 +2,7 @@ import pygame, time, sys
 from bird import Bird
 from pipe import Pipe
 from ground import Ground
+from startScreen import *
 
 
 class Game:
@@ -25,31 +26,40 @@ class Game:
 
     def run(self):
         clock = pygame.time.Clock()
-        running = True
 
-        while running:
-            for event in pygame.event.get():
-                if event.type == pygame.QUIT:
-                    running = False
-                if event.type == pygame.KEYDOWN and pygame.K_SPACE:
-                    self.bird.flap()
+        while True:
+            # resets birds position and pipes
+            self.bird = Bird(self.birdX, self.birdY)
+            self.pipes.clear()
 
+            splashScreen(self.window)
             self.draw()
+            countdown(self.window, self.width, self.height)
 
-            self.bird.fall()
-            self.createPipes()
-            self.pipeController()
+            running = True
+            while running:
+                for event in pygame.event.get():
+                    if event.type == pygame.QUIT:
+                        sys.exit()
+                    if event.type == pygame.KEYDOWN and pygame.K_SPACE:
+                        self.bird.flap()
 
-            if self.checkCollision():
-                running = False
+                self.draw()
 
-            # set frame rate
-            clock.tick(60)
+                self.bird.fall()
+                self.createPipes()
+                self.pipeController()
+
+                if self.checkCollision():
+                    running = False
+
+                # set frame rate
+                clock.tick(60)
 
     def createPipes(self):
         for _ in range(3):
             self.pipes.append(
-                Pipe(self.width + 150, self.gapHeight, self.width, self.height)
+                Pipe(self.width + 200, self.gapHeight, self.width, self.height)
             )
 
     def pipeController(self):
@@ -79,9 +89,6 @@ class Game:
 
         for pipe in self.pipes:
             pipe.draw(self.window)
-
-        scoreText = self.font.render(f"Score: {self.score}", True, (255, 255, 255))
-        self.window.blit(scoreText, (0, 20))
 
         self.ground.draw(self.window)
         self.bird.draw(self.window)

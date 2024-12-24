@@ -6,7 +6,7 @@ class Bird:
         self.x = x
         self.y = y
         self.velocity = 0  # bird at rest at the start
-        self.gravity = 0.25
+        self.gravity = 0.4
         self.lift = -6.5
         self.imageDownflap = pygame.image.load("assets/sprites/bluebird-downflap.png")
         self.imageUpflap = pygame.image.load("assets/sprites/bluebird-upflap.png")

@@ -22,7 +22,7 @@ class Pipe:
         self.rectBottom = pygame.Rect(self.x, self.bottomHeight, 52, self.bottomHeight)
 
     def move(self):
-        self.x -= 2
+        self.x -= 2.5
 
         self.rectTop.topleft = (self.x, 0)
         self.rectBottom.topleft = (self.x, self.bottomHeight)
