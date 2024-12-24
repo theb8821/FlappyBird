@@ -1,4 +1,4 @@
-import pygame
+import pygame,sys
 
 def splashScreen(screen):
     background = pygame.image.load("./assets/sprites/background-day.png")
@@ -10,7 +10,8 @@ def splashScreen(screen):
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 pygame.quit()
-                exit()
+                sys.exit()
+
             if event.type == pygame.KEYDOWN:  # Proceed to the game on any key press
                 running = False
 

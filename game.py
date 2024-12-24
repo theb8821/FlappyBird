@@ -40,6 +40,7 @@ class Game:
             while running:
                 for event in pygame.event.get():
                     if event.type == pygame.QUIT:
+                        pygame.quit()
                         sys.exit()
                     if event.type == pygame.KEYDOWN and pygame.K_SPACE:
                         self.bird.flap()

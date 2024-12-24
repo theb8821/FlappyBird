@@ -1,5 +1,9 @@
 #folders
 __pycache__
+build
+dist
 
 # files
 .DS_Store
+setup.py
+main.spec
